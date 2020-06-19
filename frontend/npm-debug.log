@@ -1,0 +1,95 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node',
+1 verbose cli   '/usr/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save',
+1 verbose cli   'vuelidate',
+1 verbose cli   'vuelidate/lib/validators' ]
+2 info using npm@3.5.2
+3 info using node@v8.10.0
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData vuelidate
+8 silly fetchPackageMetaData vuelidate/lib/validators
+9 silly fetchNamedPackageData vuelidate
+10 silly mapToRegistry name vuelidate
+11 silly mapToRegistry using default registry
+12 silly mapToRegistry registry https://registry.npmjs.org/
+13 silly mapToRegistry uri https://registry.npmjs.org/vuelidate
+14 silly fetchOtherPackageData vuelidate/lib/validators
+15 silly cache add args [ 'vuelidate/lib/validators', null ]
+16 verbose cache add spec vuelidate/lib/validators
+17 silly cache add parsed spec Result {
+17 silly cache add   raw: 'vuelidate/lib/validators',
+17 silly cache add   scope: null,
+17 silly cache add   name: null,
+17 silly cache add   rawSpec: 'vuelidate/lib/validators',
+17 silly cache add   spec: '/home/nathana/DocumentoGamer/frontend/vuelidate/lib/validators',
+17 silly cache add   type: 'local' }
+18 error addLocal Could not install /home/nathana/DocumentoGamer/frontend/vuelidate/lib/validators
+19 silly fetchPackageMetaData Error: ENOENT: no such file or directory, open '/home/nathana/DocumentoGamer/frontend/vuelidate/lib/validators'
+19 silly fetchPackageMetaData  error for vuelidate/lib/validators { Error: ENOENT: no such file or directory, open '/home/nathana/DocumentoGamer/frontend/vuelidate/lib/validators'
+19 silly fetchPackageMetaData   errno: -2,
+19 silly fetchPackageMetaData   code: 'ENOENT',
+19 silly fetchPackageMetaData   syscall: 'open',
+19 silly fetchPackageMetaData   path: '/home/nathana/DocumentoGamer/frontend/vuelidate/lib/validators' }
+20 verbose request uri https://registry.npmjs.org/vuelidate
+21 verbose request no auth needed
+22 info attempt registry request try #1 at 17:13:38
+23 verbose request id e06cacd9669f2022
+24 verbose etag W/"92d2430369479b72cd13eccea08f64aa"
+25 verbose lastModified Mon, 13 Jan 2020 19:48:38 GMT
+26 http request GET https://registry.npmjs.org/vuelidate
+27 http 304 https://registry.npmjs.org/vuelidate
+28 verbose headers { date: 'Fri, 19 Jun 2020 20:13:38 GMT',
+28 verbose headers   connection: 'keep-alive',
+28 verbose headers   'set-cookie':
+28 verbose headers    [ '__cfduid=d8c741e665195bd48b708180fd244c2ad1592597618; expires=Sun, 19-Jul-20 20:13:38 GMT; path=/; domain=.npmjs.org; HttpOnly; SameSite=Lax' ],
+28 verbose headers   'cf-ray': '5a5fe96c3dc3f6d3-GRU',
+28 verbose headers   age: '425',
+28 verbose headers   'cache-control': 'public, max-age=300',
+28 verbose headers   etag: '"92d2430369479b72cd13eccea08f64aa"',
+28 verbose headers   'last-modified': 'Mon, 13 Jan 2020 19:48:38 GMT',
+28 verbose headers   vary: 'Accept-Encoding',
+28 verbose headers   'cf-cache-status': 'HIT',
+28 verbose headers   'cf-request-id': '036fd037a40000f6d3b03a9200000001',
+28 verbose headers   'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+28 verbose headers   server: 'cloudflare' }
+29 silly get cb [ 304,
+29 silly get   { date: 'Fri, 19 Jun 2020 20:13:38 GMT',
+29 silly get     connection: 'keep-alive',
+29 silly get     'set-cookie':
+29 silly get      [ '__cfduid=d8c741e665195bd48b708180fd244c2ad1592597618; expires=Sun, 19-Jul-20 20:13:38 GMT; path=/; domain=.npmjs.org; HttpOnly; SameSite=Lax' ],
+29 silly get     'cf-ray': '5a5fe96c3dc3f6d3-GRU',
+29 silly get     age: '425',
+29 silly get     'cache-control': 'public, max-age=300',
+29 silly get     etag: '"92d2430369479b72cd13eccea08f64aa"',
+29 silly get     'last-modified': 'Mon, 13 Jan 2020 19:48:38 GMT',
+29 silly get     vary: 'Accept-Encoding',
+29 silly get     'cf-cache-status': 'HIT',
+29 silly get     'cf-request-id': '036fd037a40000f6d3b03a9200000001',
+29 silly get     'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+29 silly get     server: 'cloudflare' } ]
+30 verbose etag https://registry.npmjs.org/vuelidate from cache
+31 verbose get saving vuelidate to /home/nathana/.npm/registry.npmjs.org/vuelidate/.cache.json
+32 silly rollbackFailedOptional Starting
+33 silly rollbackFailedOptional Finishing
+34 silly runTopLevelLifecycles Starting
+35 silly runTopLevelLifecycles Finishing
+36 silly install printInstalled
+37 verbose stack Error: ENOENT: no such file or directory, open '/home/nathana/DocumentoGamer/frontend/vuelidate/lib/validators'
+38 verbose cwd /home/nathana/DocumentoGamer/frontend
+39 error Linux 5.0.0-32-generic
+40 error argv "/usr/bin/node" "/usr/bin/npm" "install" "--save" "vuelidate" "vuelidate/lib/validators"
+41 error node v8.10.0
+42 error npm  v3.5.2
+43 error path /home/nathana/DocumentoGamer/frontend/vuelidate/lib/validators
+44 error code ENOENT
+45 error errno -2
+46 error syscall open
+47 error enoent ENOENT: no such file or directory, open '/home/nathana/DocumentoGamer/frontend/vuelidate/lib/validators'
+48 error enoent ENOENT: no such file or directory, open '/home/nathana/DocumentoGamer/frontend/vuelidate/lib/validators'
+48 error enoent This is most likely not a problem with npm itself
+48 error enoent and is related to npm not being able to find a file.
+49 verbose exit [ -2, true ]
