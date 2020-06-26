@@ -29,7 +29,7 @@ def create():
     if request.method == 'POST':
         response_object['path'] = CreateDocument(request)
     else:
-        response_object['path'] = 'Esta caindo aqui'
+        response_object['path'] = ''
     return jsonify(response_object)
 
 def CreateDocument(dados):
@@ -37,7 +37,8 @@ def CreateDocument(dados):
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype("Alef-Regular.ttf", 14)
     color = (0,0,0)
-    print("Create document",dados)
+
+    # Adiciona dados aos documentos
     draw.text((195, 90),dados.form.get('username').encode("utf-8"),color,font=font) # username
     draw.text((195, 135),dados.form.get('otherdatas').encode("utf-8"),color,font=font) # dados adicionais
     draw.text((393, 90),dados.form.get('psn').encode("utf-8"),color,font=font) # psn
@@ -45,19 +46,25 @@ def CreateDocument(dados):
     draw.text((393, 176),dados.form.get('xbox').encode("utf-8"),color,font=font) # xbox
     draw.text((393, 218),dados.form.get('steam').encode("utf-8"),color,font=font) # steam
 
+    # realliza upload no servidor da imaem de avatar
     path = upload_file(dados)
-    print(path)
+
+    # com a imagem de avatar, adicionamos ela em nosso documento
+    new_photo = 'Carteirinhagamer'+str(uuid.uuid4().hex)+".png"
     photo = Image.open(path)
     basewidth = 150
+
     wpercent = (basewidth/float(photo.size[0]))
     hsize = int((float(photo.size[1])*float(wpercent)))
     photo = photo.resize((basewidth,hsize), Image.ANTIALIAS)
-    new_photo = 'Carteirinhagamer'+str(uuid.uuid4().hex)+".png"
+
     img.paste(photo, (30,70))
     img.save(new_photo)
+
     return new_photo
 
 def upload_file(request):
+    # Se nao for colocado nenhuma imagem, usamos uma default
     if not request:
         return "icon.png"
     else:
@@ -69,9 +76,7 @@ def upload_file(request):
 
 @app.route('/uploads/<path:filename>', methods=['GET', 'POST'])
 def download_file(filename):
-    print("download",filename)
     uploads = os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'])
-    print(uploads)
     return send_from_directory(directory=uploads, filename=filename)
 
 if __name__ == '__main__':
