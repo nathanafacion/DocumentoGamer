@@ -1,13 +1,16 @@
-    
+
 # -*- coding: utf-8 -*-
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, redirect, url_for
 from flask_cors import CORS, cross_origin
 import json
-from PIL import Image
+from PIL import Image, ImageDraw
 from PIL import ImageFont
 from werkzeug.utils import secure_filename
+from flask import current_app
+from flask import send_from_directory
+import os
 
-UPLOAD_FOLDER = '/'
+UPLOAD_FOLDER = '/home/nathana/DocumentoGamer/backend/'
 DEBUG = True
 
 app = Flask(__name__)
@@ -17,49 +20,55 @@ app.config.from_object(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-
 @app.route('/carteirinha', methods=['POST','GET'])
 @cross_origin()
 def create():
     response_object = {'status': 'success'}
     print(request)
     if request.method == 'POST':
-        print(request.get_json())
-        CreateDocument(request.get_json())
-          
-        response_object['message'] = 'Jogo adicionado'
+        response_object['path'] = 'Carteirinhagamer2020.png'
     else:
-        response_object['jogos'] = ''
+        response_object['path'] = ''
     return jsonify(response_object)
+
+def upload_file(request):
+    if not request:
+        return "icon.png"
+    else:
+        file = request.files['avatar']
+        filename = secure_filename(file.name)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return filename
 
 def CreateDocument(dados):
     img = Image.open("Carteirinhagamer.png")
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype("Alef-Regular.ttf", 14)
     color = (0,0,0)
-    
-    draw.text((195, 90),dados.get('username').encode("utf-8"),color,font=font) # username
-    draw.text((195, 135),dados.get('otherdatas').encode("utf-8"),color,font=font) # dados adicionais
-    draw.text((393, 90),dados.get('psn').encode("utf-8"),color,font=font) # psn
-    draw.text((393, 133),dados.get('nintendo').encode("utf-8"),color,font=font) # nintendo
-    draw.text((393, 176),dados.get('xbox').encode("utf-8"),color,font=font) # xbox
-    draw.text((393, 218),dados.get('steam').encode("utf-8"),color,font=font) # steam
-    
-    photo = Image.open(dados.get('avatar').encode("utf-8"))
+    print("Create document",dados)
+    draw.text((195, 90),dados.form.get('username').encode("utf-8"),color,font=font) # username
+    draw.text((195, 135),dados.form.get('otherdatas').encode("utf-8"),color,font=font) # dados adicionais
+    draw.text((393, 90),dados.form.get('psn').encode("utf-8"),color,font=font) # psn
+    draw.text((393, 133),dados.form.get('nintendo').encode("utf-8"),color,font=font) # nintendo
+    draw.text((393, 176),dados.form.get('xbox').encode("utf-8"),color,font=font) # xbox
+    draw.text((393, 218),dados.form.get('steam').encode("utf-8"),color,font=font) # steam
+
+    path = upload_file(dados)
+    photo = Image.open(path)
     basewidth = 150
     wpercent = (basewidth/float(photo.size[0]))
     hsize = int((float(photo.size[1])*float(wpercent)))
     photo = photo.resize((basewidth,hsize), Image.ANTIALIAS)
+    new_photo = os.path.join(app.config['UPLOAD_FOLDER'],'Carteirinhagamer2020.png')
     img.paste(photo, (30,70))
-    img.save('Carteirinhagamer2020.png')
-    
-def upload_file(request):
-    file = request.files['avatar']
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    return filename
+    img.save(new_photo)
+    return new_photo
 
+
+@app.route('/uploads/<path:filename>', methods=['GET', 'POST'])
+def download_file(filename):
+    uploads = os.path.join(current_app.root_path, app.config['UPLOAD_FOLDER'])
+    return send_from_directory(directory=uploads, filename=filename)
 
 if __name__ == '__main__':
     app.run()
