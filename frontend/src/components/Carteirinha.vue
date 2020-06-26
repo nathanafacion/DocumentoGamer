@@ -27,44 +27,44 @@
                       <label for="username">Nickname: </label>
                   </div>
                   <div class="col-sm-8" style="margin-bottom:20px;">
-                      <input id="username" v-model="user.username" type="text" name="username" class="form-control" placeholder="Como é conhecido nos jogos..." aria-describedby="basic-addon1">
+                      <input id="username" v-model="user.username" type="text" name="username" class="form-control" maxlength="25" placeholder="Como é conhecido nos jogos..." aria-describedby="basic-addon1" required>
                   </div>
                   <div class="col-sm-4" style="margin-bottom:20px;">
                       <label for="psn">PSN ID: </label>
                   </div>
                   <div class="col-sm-8" style="margin-bottom:20px;">
-                      <input id="psn" v-model="user.psn"  type="text" name="psn" class="form-control" placeholder="Sua PSN.." aria-describedby="basic-addon1">
+                      <input id="psn" v-model="user.psn"  type="text" name="psn" class="form-control" maxlength="25" placeholder="Sua PSN.." aria-describedby="basic-addon1">
                   </div>
                   <div class="col-sm-4" style="margin-bottom:20px;">
                       <label for="nintendo">Friend CODE: </label>
                   </div>
                   <div class="col-sm-8" style="margin-bottom:20px;">
-                      <input id="nintendo" v-model="user.nintendo"  type="text" class="form-control" name="nintendo" placeholder="Seu Friend Code..." aria-describedby="basic-addon1">
+                      <input id="nintendo" v-model="user.nintendo"  type="text" class="form-control" maxlength="25" name="nintendo" placeholder="Seu Friend Code..." aria-describedby="basic-addon1">
                   </div>
                   <div class="col-sm-4" style="margin-bottom:20px;">
                       <label for="xbox">TAG Gamer: </label>
                   </div>
                   <div class="col-sm-8" style="margin-bottom:20px;">
-                      <input id="xbox" v-model="user.xbox" type="text" name="xbox" class="form-control" placeholder="Seu TAG Gamer..." aria-label="Comprar" aria-describedby="basic-addon1">
+                      <input id="xbox" v-model="user.xbox" type="text" name="xbox" class="form-control" maxlength="25" placeholder="Seu TAG Gamer..." aria-label="Comprar" aria-describedby="basic-addon1">
                   </div>
                   <div class="col-sm-4" style="margin-bottom:20px;">
                       <label for="steam">Steam: </label>
                   </div>
                   <div class="col-sm-8" style="margin-bottom:20px;">
-                      <input id="steam" v-model="user.steam" type="text" name="steam" class="form-control" placeholder="Sua Steam..." aria-describedby="basic-addon1">
+                      <input id="steam" v-model="user.steam" type="text" name="steam" class="form-control" maxlength="25" placeholder="Sua Steam..." aria-describedby="basic-addon1">
                   </div>
                   <div class="col-sm-4" style="margin-bottom:20px;">
                       <label for="otherdatas">Dados Adicionais: </label>
                   </div>
                   <div class="col-sm-8" style="margin-bottom:20px;">
-                      <textarea id="otherdatas" v-model="user.otherdatas" rows="4" name="otherdatas" placeholder="Outros dados que considera importante..."
+                      <textarea id="otherdatas" v-model="user.otherdatas" rows="4" name="otherdatas" maxlength="25" placeholder="Outros dados que considera importante..."
                       class="form-control"> </textarea>
                   </div>
                    <div class="col-sm-4" style="margin-bottom:20px;">
                       <label for="file-photo">Foto: </label>
                   </div>
                   <div class="col-sm-8" style="margin-bottom:20px;">
-                     <input type="file" accept="image/*"  name="avatar" v-on:change="uploadFile" class="form-control"  id="avatar">
+                     <input type="file" accept="image/*"  name="avatar" v-on:change="uploadFile" class="form-control"  id="avatar" required>
                   </div>
                    <div class="col-sm-8" style="margin-bottom:20px;">
                   </div>
@@ -109,18 +109,19 @@ export default {
                this.user.avatar = event.target.files[0]
             },
             handleSubmit() {
-                this.submitted = true;
-                console.log("entrou no submite")
+
+
+                // Todos os dados que vão para o servidor
                 let payload = new FormData();
                 payload.append('username', this.user.username);
-                payload.append('psn', this.user.psn);
-                payload.append('nintendo', this.user.nintendo);
-                payload.append('xbox', this.user.xbox);
-                payload.append('steam', this.user.steam);
-                payload.append('otherdatas', this.user.otherdatas);
+                payload.append('psn', this.user.psn || "-");
+                payload.append('nintendo', this.user.nintendo || "-");
+                payload.append('xbox', this.user.xbox || "-");
+                payload.append('steam', this.user.steam || "-");
+                payload.append('otherdatas', this.user.otherdatas || "-");
                 payload.append('avatar', this.user.avatar);
-                console.log( this.user.username);
-                console.log(payload)
+
+                // link necessario para download e upload
                 const path = "http://localhost:5000/carteirinha";
                 const upload = "http://localhost:5000/uploads/"
                 axios
@@ -137,7 +138,7 @@ export default {
                         msg_sucess.style.display = "";
                         // Adiciona o caminho a carteirinha
                         this.user.carteirinha = upload + msg.data.path
-                        console.log("this.user.carteirinha",  this.user.carteirinha)
+
                       }
                     })
                       .catch(error => {

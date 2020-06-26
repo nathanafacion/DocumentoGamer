@@ -25,7 +25,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @cross_origin()
 def create():
     response_object = {'status': 'success'}
-    print(request)
     if request.method == 'POST':
         response_object['path'] = CreateDocument(request)
     else:
@@ -64,14 +63,11 @@ def CreateDocument(dados):
     return new_photo
 
 def upload_file(request):
-    # Se nao for colocado nenhuma imagem, usamos uma default
-    if not request:
-        return "icon.png"
-    else:
-        file = request.files['avatar']
-        filename = secure_filename(file.name)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return filename
+
+    file = request.files['avatar']
+    filename = secure_filename(file.name)
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    return filename
 
 
 @app.route('/uploads/<path:filename>', methods=['GET', 'POST'])
