@@ -21,7 +21,7 @@
             <form  id="createCarteirinha"  @submit.prevent="handleSubmit">
              <div class="row">
                <div id="msg_sucess" class="col-sm-12" style="margin-bottom:20px;display:none;">
-                    <a class="button" v-on:click="Download()">Download do Documento</a>
+                    <a id="downloadCaterinha" class="button" :href="user.carteirinha" download>Download do Documento</a>
                </div>
                   <div class="col-sm-4" style="margin-bottom:20px;">
                       <label for="username">Nickname: </label>
@@ -110,13 +110,7 @@ export default {
             },
             handleSubmit() {
                 this.submitted = true;
-
-                // stop here if form is invalid
-                this.$v.$touch();
-                if (this.$v.$invalid) {
-                    return;
-                }
-                console.log(this.user.avatar)
+                console.log("entrou no submite")
                 let payload = new FormData();
                 payload.append('username', this.user.username);
                 payload.append('psn', this.user.psn);
@@ -125,8 +119,10 @@ export default {
                 payload.append('steam', this.user.steam);
                 payload.append('otherdatas', this.user.otherdatas);
                 payload.append('avatar', this.user.avatar);
-
+                console.log( this.user.username);
+                console.log(payload)
                 const path = "http://localhost:5000/carteirinha";
+                const upload = "http://localhost:5000/uploads/"
                 axios
                   .post(path,payload,{
                    headers: {
@@ -140,7 +136,8 @@ export default {
                         // Altera a div que vai aparecer
                         msg_sucess.style.display = "";
                         // Adiciona o caminho a carteirinha
-                        this.user.carteirinha = msg.data.path
+                        this.user.carteirinha = upload + msg.data.path
+                        console.log("this.user.carteirinha",  this.user.carteirinha)
                       }
                     })
                       .catch(error => {
@@ -148,34 +145,7 @@ export default {
                     });
 
             },
-            Download() {
-                console.log("entrou")
-                this.submitted = false;
 
-                var payload = this.user.carteirinha
-
-                const path = "http://localhost:5000/uploads/"+ payload;
-                axios
-                  .post(path,payload,{
-                   headers: {
-                    }
-
-                    }).then((response) => {
-
-                       var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-                       var fileLink = document.createElement('a');
-
-                       fileLink.href = fileURL;
-                       fileLink.setAttribute('download', 'file.png');
-                       document.body.appendChild(fileLink);
-
-                       fileLink.click();
-                    })
-                      .catch(error => {
-                      console.log(error);
-                    });
-
-            }
         },
 
     };
